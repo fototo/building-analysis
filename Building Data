@@ -1,0 +1,22 @@
+library(XML)
+orignalUrl<-"http://apis.data.go.kr/1611000/BldEngyService/getBeElctyUsgInfo?"#공공데이터 주소 입력 
+api_key<-"8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D"#API key 값 입력
+
+#특정 데이터를 볼러오기 위한 인수 입력/전부다 필요한 것은 아님
+items<-list(
+rnum<-vector(mode="numeric",length=8),
+useYm<-vector(mode="character",length=6),
+platPlc<-vector(mode="character",length=500),
+newPlatPlc<-vector(mode="character",length=400),
+sigunguCd<-vector(mode="character",length=5),
+bjdongCd<-vector(mode="character",length=5),
+platGbCd<-vector(mode="character",length=1),
+bun<-vector(mode="character",length=4),
+ji<-vector(mode="character",length=4),
+naRoadCd<-vector(mode="character",length=4),
+naUgrndCd<-vector(mode="character",length=12),
+naMainBun<-vector(mode="character",length=5),
+naSubBun<-vector(mode="character",length=5),
+useQty<-vector(mode="character",length=22)
+)
+  
