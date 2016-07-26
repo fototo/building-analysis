@@ -1,4 +1,4 @@
-# 건물 정보 분석(R + 정부 공공데이터 API) 
+# R과 정부 공공데이터 API를 활용한 건물정보 분석  
 
 R을 통해서 대한민국의 건물분석을 위한 프로그램입니다.<br>
 정부 공공데이터 포털(https://www.data.go.kr) 에서 API를 JSON파일을 끌어와서 만들었습니다. <br>
@@ -6,24 +6,41 @@ R을 통해서 대한민국의 건물분석을 위한 프로그램입니다.<br>
 태양광을 지어진 뒤, 7년쯤 있다가 리모델링이 되서 철거된다든지 말입니다. 
 
 ##정부공공데이터 사용시 유의해야할 점 
-정부 공공데이터 포털을 활용시 정보가 너무 없어서 고생을 많이했습니다. 공공데이터 포털의 가이드로는 부족하더군요. API를 접속하면서 몇가지 의문점을 정리하겠습니다. <br>
+정부 공공데이터 포털을 활용시 정보가 너무 없어서 고생을 많이했습니다. 공공데이터 포털의 가이드로는 부족하더군요. 공공데이터 API를 접속하는데 먼저 간단한 가이드를 하겠습니다.   <br>
 
-### 1.ouath-authentication 이 필요한가? <br>
+### ouath-authentication 이 필요없는 API 접속<br>
 Facebook, twitter, github api를 접속할 때는 반드시 ouath-login과정을 거쳐야 합니다. 사용자 인증을 위함입니다. 
 하지만, 공공데이터 API에서는 ouath-authentication과 같은 과정은 필요가 없습니다.url에 바로 service key를 입력해서 GET(httr) 함수를 통해서 실행하면 됩니다. 
 <br></br>
 건축물 대장 API의 인증을 받으면 발급되는 것은 서비스키 하나입니다.보통 oauth로그인할 때 주어지는 consumer secret,이나 endpoints는 없습니다. (endpoints는 경우에 따라 있는 경우도 있습니다}
 저의 서비스 키는 아래와 같습니다.
-<br></br>
-`8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D`입니다. 
-<br></br>
-### 2.그러면 어떻게 불러온다는 말인가? <br>
-공공데이터 포털에서는 oauth 인증 필요 없이  url은 "http://apis.data.go.kr/1611000/BldRgstService/getBrRecapTitleInfo?" 입니다.
-건축물 대장에 API가이드에에서 예시되는 API의 주소는<br> "http://apis.data.go.kr/1611000/BldRgstService/getBrBasisOulnInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=인증키" 입니다.<br>
-기본 API url 이후에 "sigunguCd(시군구 코드)" 와 "bjdongCd(법정동 코드)"는 API내의 <br>
-그러므로, 전체 코드는 다음과 구성될 수 있습니다. 
-<br></br>
+<br>
+`8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D`
+<br>
+공공데이터 포털에서는 API 가이드북을 보면, 기본 url은 아래와 같습니다.<br> 
+`"http://apis.data.go.kr/1611000/BldRgstService/getBrRecapTitleInfo?"`
+건축물 대장에 API가이드에에서 예시되는 API의 주소는 아래와 같습니다.<br>  ``"http://apis.data.go.kr/1611000/BldRgstService/getBrBasisOulnInfo?sigunguCd=11680&bjdongCd=10300&bun=0012&ji=0000&ServiceKey=인증키" ``<br>
+기본 API url 이후에 "sigunguCd(시군구 코드)" 와 "bjdongCd(법정동 코드)"는 API내의 변수입니다.이처럼 url속에 "&" 과 필요한 변수의 코드를 입력하면 해댱 건물의 데이터를 불러올 수 있습니다. 그러므로, 전체 API코드는 다음과 구성될 수 있습니다. 
+<br>
     `req<-GET('http://apis.data.go.kr/1611000/BldRgstService/getBrBasisOulnInfo?sigunguCd=11680&bjdongCd=10300&bu n=0012&ji=0000&ServiceKey= 8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D')
-    building.data<-cotent(req)`
+    building.data<-cotent(req)
+    building.data `
+<br> 
+당연한 것은 sigunguCd(시군구 코드)를 bjdongCd(법정동코드)나 다른 코드를 입력하면 다른 건물의 데이터를 불러올 수 있습니다. 자세한 것은 홈페이지 참조바랍니다. 
+
+## 본 Repository의 구성 
+1. 건물정보(building information) : 건축물 대장 정보 서비스의 API를 활용한 건축물 정보의 조회입니다. <br> 
+2. 건물에너지정보(builing energy) : 건물 에너지 정보 서비스의 API를 활용한 건물의 에너지 정보 조회입니다. <br>
+다른API 개방에 따라 유용한 API가 있으면 추가적으로 구성할 예정입니다. <br>
+<hr>
+문과 전공자여서 코드 자체가 많이 부족합니다. 부족한 점 있으면 언제든지 연락바랍니다. 
+
+
+
+
+
+
+
+
 
 
