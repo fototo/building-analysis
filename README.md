@@ -12,8 +12,7 @@ Facebook, twitter, github api를 접속할 때는 반드시 ouath-login과정을
 하지만, 공공데이터 API에서는 ouath-authentication과 같은 과정은 필요가 없습니다.url에 바로 service key를 입력해서 GET(httr) 함수를 통해서 실행하면 됩니다. 
 <br></br>
 건축물 대장 API의 인증을 받으면 발급되는 것은 서비스키 하나입니다.보통 oauth로그인할 때 주어지는 consumer secret,이나 endpoints는 없습니다. (endpoints는 경우에 따라 있는 경우도 있습니다} <br></br>
-1.저의 서비스 키는 아래와 같습니다.
-<br></br>
+1.저의 서비스 키는 아래와 같습니다.<br>
 `8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D`
 <br></br>
 2. 공공데이터 포털에서는 API 가이드북을 보면, 기본 url은 아래와 같습니다.<br> 
